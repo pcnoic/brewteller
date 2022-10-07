@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Brewteller | AI Powered Coffee Fortune Teller</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="description"
+    content="Using state-of-the-art neural networks Brewteller can predict your future based on the residue that your coffee leaves behind. Upload your coffee cup picture now!" />
+  <meta name="keywords" content="coffee fortune teller, kaave, fortune teller, brewteller, ai coffee" />
+
+  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+  <!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  <style>
+    article,
+    aside,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <!--Replace with your tailwind.css once created-->
+  <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet" />
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+    html {
+      font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+  </style>
+</head>
+
+<body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed"
+  style="background-image: url('header.png');">
+  <div class="h-full">
+    <!--Nav-->
+    <div class="w-full container mx-auto">
+      <div class="w-full flex items-center justify-between">
+        <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+          href="#">
+          Brew<span
+            class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">Teller</span>
+        </a>
+
+        <div class="flex w-1/2 justify-end content-center">
+          <a class="inline-block text-blue-300 no-underline hover:text-pink-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
+            href="https://twitter.com/pcnoic">
+            <svg class="fill-current h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+              <path
+                d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z">
+              </path>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!--Main-->
+    <div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+      <!--Left Col-->
+      <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
+        <form class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4" id="again">
+          <h3 id="quote"
+            class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+          </h3>
+          <div id="retry" class="flex items-center justify-between pt-4">
+            <button
+              class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+              type="submit">
+              Predict Again
+            </button>
+          </div>
+        </form>
+        <h1 id="header-1"
+          class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+          Predict
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+            your future with
+          </span>
+          our AI powered coffee reading app.
+        </h1>
+        <p id="paragraph-1" class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
+          The patterns that your coffee leaves behind can tell you a lot about your future.
+        </p>
+
+        <form class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4" id="predict">
+          <div id="upload_window" class="max-w-xl">
+            <label
+              class="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+              <span class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <div id="upload_text">
+                  <span class="font-medium text-gray-600">
+                    Drop your coffee picture
+                    <span class="text-blue-600 underline">or browse</span>
+                  </span>
+              </span>
+          </div>
+          <input id="file_upload" type="file" accept="image/x-png,image/gif,image/jpeg, image/png" name="file_upload"
+            class="hidden" onchange="read(this);">
+          </label>
+      </div>
+      <img id="upload_img" src="#" />
+
+
+      <div class="flex items-center justify-between pt-4">
+        <button
+          class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+          type="submit">
+          Predict
+        </button>
+      </div>
+      </form>
+    </div>
+
+    <!--Right Col-->
+    <div class="w-full xl:w-3/5 p-12 overflow-hidden">
+      <img
+        class="mx-auto w-full md:w-4/5 transform -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-6"
+        src="coffee.svg" />
+    </div>
+
+    <!--Footer-->
+    <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
+      <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; Brewteller 2022</a>
+      - Powered by
+      <a class="text-gray-500 no-underline hover:no-underline" href="https://en.wikipedia.org/wiki/Coffee">coffee</a>
+    </div>
+  </div>
+  </div>
+</body>
+<script type="text/javascript">
+
+  const api_url = "https://goquotes-api.herokuapp.com/api/v1/random?count=1";
+
+  async function getQuote() {
+    const response = await fetch(api_url);
+    var data = await response.json();
+    return data;
+  }
+
+  function read() {
+    var file = document.getElementById("file_upload").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      document.getElementById("upload_window").style.display = "none";
+      document.getElementById('upload_img').src = reader.result;
+      document.getElementById('upload_img').style.display = "block";
+    }
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      document.getElementById('upload_img').src = "";
+    }
+  }
+
+  const formAgain = document.getElementById("again");
+  formAgain.style.display = "none";
+  const retryBtn = document.getElementById("retry");
+  retryBtn.style.display = "none";
+  const image = document.getElementById("upload_img");
+  image.style.display = "none";
+
+  // hide form predict after user presses predict
+  const form = document.getElementById("predict");
+  const titleHeader = document.getElementById("header-1");
+  const paragraph = document.getElementById("paragraph-1");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    form.style.display = "none";
+    titleHeader.style.display = "none";
+    paragraph.style.display = "none";
+
+    // fetch quote with getQuote and display it
+    getQuote().then(data => {
+      const quote = data["quotes"][0]["text"];
+      const quoteContainer = document.getElementById("quote");
+      quoteContainer.innerHTML = quote;
+      quoteContainer.style.display = "block";
+      retryBtn.style.display = "block";
+      formAgain.style.display = "block";
+    });
+  });
+
+  // show form predict again after user presses predict again
+
+  formAgain.addEventListener("submit", function (e) {
+    e.preventDefault();
+    form.style.display = "block";
+    titleHeader.style.display = "block";
+    paragraph.style.display = "block";
+    const quoteContainer = document.getElementById("quote");
+    quoteContainer.style.display = "none";
+    retryBtn.style.display = "none";
+    formAgain.style.display = "none";
+    document.getElementById('upload_img').src = "";
+  });
+
+
+</script>
+
+</html>
